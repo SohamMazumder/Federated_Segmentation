@@ -1,0 +1,39 @@
+---
+version: 1
+
+kind: group
+
+hptuning:
+  concurrency: 1
+  matrix:
+    local_ep:
+      values: [2]
+    num_users:
+      values: [2, 4, 5, 10, 20]
+        
+  
+
+build:
+  # image: # Image name to use
+  image: pytorch/pytorch:1.0.1-cuda10.0-cudnn7-runtime
+  build_steps:
+  - pip install tensorboardX==1.4 torchvision nibabel scipy numpy tqdm pydevd h5py matplotlib sklearn
+  - pip install https://github.com/shayansiddiqui/nn-common-modules/releases/download/v1.0/nn_common_modules-1.0-py2.py3-none-any.whl
+  - pip install https://github.com/abhi4ssj/squeeze_and_excitation/releases/download/v1.0/squeeze_and_excitation-1.0-py2.py3-none-any.whl
+  
+environment:
+  resources:
+    cpu:
+      requests: 2
+      limits: 8
+    memory:
+      requests: 15000
+      limits: 20000
+    gpu:
+      requests: 1
+      limits: 1
+
+run:
+  # cmd: # Command to use
+  #cmd: ln -s $POLYAXON_RUN_OUTPUTS_PATH /my_out && python main_fed.py --config resources/train_config_malc.yaml
+  cmd: python main_fed.py --dataset brain --model segment --epochs 50 --gpu 0  --local_ep {{local_ep}} --num_users {{num_users}} --loss_balance 0 --lr 1e-4 --log_folder $POLYAXON_RUN_OUTPUTS_PATH

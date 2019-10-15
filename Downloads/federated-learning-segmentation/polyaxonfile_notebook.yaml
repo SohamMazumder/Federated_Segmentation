@@ -1,0 +1,23 @@
+---
+version: 1
+
+kind: notebook
+
+build:
+  # image: # Image name to use
+  image: pytorch/pytorch:1.0.1-cuda10.0-cudnn7-runtime
+  build_steps:
+  - pip install tensorboardX==1.4 torchvision nibabel scipy numpy tqdm pydevd h5py matplotlib sklearn jupyter pandas seaborn
+  - pip install opencv-python
+  
+environment:
+  resources:
+    cpu:
+      requests: 2
+      limits: 6
+    memory:
+      requests: 10000
+      limits: 15000
+    gpu:
+      requests: 1
+      limits: 1

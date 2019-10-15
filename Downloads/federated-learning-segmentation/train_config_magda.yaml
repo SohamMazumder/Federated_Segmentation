@@ -1,0 +1,115 @@
+# path to the checkpoint directory
+checkpoint_dir: '.'
+# path to latest checkpoint; if provided the training will be resumed from that checkpoint
+# '/home/stefano/logs_hippo/ternary_TTQ_relu_std_0.0002_dice_1552034975.6358526/'
+resume: false
+# number of input channels to the model
+in_channels: 1
+# number of output channels
+out_channels: 3
+# determines the order of operators in a single layer (crg - Conv3d+ReLU+GroupNorm)
+layer_order: crg
+# loss function to be used during training (ce - CrossEntropy)
+loss: dice_ce
+# A manual rescaling weight given to each class.
+loss_weight: null
+# initial learning rate
+learning_rate: 0.0001
+# weight decay
+weight_decay: 0.0001
+# a target value that is ignored and does not contribute to the input gradient
+ignore_index: null
+# use simple Curriculum Learning scheme if ignore_index is present
+curriculum: false
+# use nn.Upsample for upsampling in the decoder path instead of ConvTranspose3d
+interpolate: true
+# number of feature maps in the 1st encoder layer
+init_channel_number: 64
+# apply element-wise nn.Sigmoid after the final 1x1x1 convolution, otherwise apply nn.Softmax
+final_sigmoid: false
+# how many iterations between validations
+validate_after_iters: 50
+# how many iterations between tensorboard logging
+log_after_iters: 5
+# max number of epochs
+epochs: 500
+# max number of iterations
+iters: 1000000
+# number of epochs with no loss improvement after which the training will be stopped
+patience: 20
+# batch size
+batch_size: 1
+# train patch size given to the network (adapt to fit in your GPU mem, generally the bigger patch the better)
+train_patch: [32, 64, 64]
+# train stride between patches (make sure that the training patches overlap)
+train_stride: [8, 16, 16]
+# validation patch (can be bigger than train patch since there is no backprop)
+val_patch: [64, 128, 128]
+# validation stride (validation patches doesn't need to overlap)
+val_stride: [64, 128, 128]
+# path to the raw data within the H5
+raw_internal_path: raw
+# path to the the label data within the H5
+label_internal_path: label
+# paths to the training datasets
+# data augmentation
+transformer: StandardTransformer
+# directory for the 3D volumes
+#volumes_dir: '/mnt/data/decathlon/Task04_Hippocampus/imagesTr/'
+volumes_dir: '/data/decathlon/Task04_Hippocampus/imagesTr/'
+#volumes_dir: '/data/OASISchallenge/FS/'
+# directory for the labels
+#labels_dir: '/mnt/data/decathlon/Task04_Hippocampus/labelsTr/'
+labels_dir: '/data/decathlon/Task04_Hippocampus/labelsTr/'
+#labels_dir: '/data/OASISchallenge/'
+# files that contain/will contain the info for training and test
+files_for_ref: ['training_files.txt', 'test_files.txt']
+#files_for_ref: ['/data/OASISchallenge/training_15.txt', '/data/OASISchallenge/testing_15.txt']
+# amount of data for training
+training_amount: 182
+# if set to false it reads from the files_for_ref, otherwise it writes them
+save_data_to_file: false
+# if true, quantization will be applied, otherwise standard weights - FULL PRECISION OR NOT
+ternary_weights_style: true
+# 1.5 for the ternary {-1,0,1}, 1 for binary {0,1}, 2 for 2-bits...
+num_bits: 1.5
+# the number of scaling factors for each kernel, not relevant if num_bits is 1.5
+num_sf: 2
+# this is to have binary weights like {-1,1} (instead of {0,1}), 2 bits like {-1,0,1,2} (instead of {0,1,2,3}),
+# not relevant if num_bits is 1.5
+shift_down: false
+# hyperparameter for quantization
+HYPERPARAMETER_T: 0.05
+# beta value for the ternary_tanh
+beta: 3.0
+# if false linearly change beta for the ternary_tanh, otherwise fixed
+fixed_beta: false
+# activations can be [relu, ttanh, relu6, prelu]
+activations: 'relu'
+# input size to match through padding
+pad_to_size: 64
+#
+ternary_net: false
+# constrain also the values before conv
+ternary_ops: false
+# if ternary w but not ternary style, if want to rcale by alpha like TernaryNet.
+# if TernaryNet, this is irrelevant, always done
+scale_by_alpha: false
+# TTQ, train also biases
+train_also_biases: false
+# either false or the path to the checkpoint to start with as initialization
+# '/home/stefano/logs_hippo/full_std_relu_std_0.0002_dice/best_checkpoint.pytorch'
+start_from_pretrained: false
+# only malc
+patches: true
+#
+number_of_folds: 5
+# just a flag to have the additional _trial_<milliseconds> within the checkpoint/event folder
+trial: true
+
+dataset: 'hippo'
+
+# Chosen architecture for the experiment. Can be 3dUnet or VNet
+architecture: '3dunet'
+
+cluster: true
