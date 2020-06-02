@@ -22,6 +22,6 @@ pytorch 0.4
 | Method        | Best Performance (Dice |
 | ------------- | ---------------------- |
 | Baseline      | 0.867 |
-| FL with Loss Balancing  | 0.84  |
+| **FL with Loss Balancing**  | **0.84**  |
 | Brain Torrent | 0.863 |
 | CIIL          | 0.829 |
