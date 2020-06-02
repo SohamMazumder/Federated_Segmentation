@@ -18,6 +18,7 @@ python 3.6
 pytorch 0.4
 
 ## Results
+### Quantitative Results
 
 | Method        | Best Performance (Dice |
 | ------------- | ---------------------- |
@@ -25,3 +26,7 @@ pytorch 0.4
 | **FL with Loss Balancing**  | **0.840**  |
 | Brain Torrent | 0.863 |
 | CIIL          | 0.829 |
+
+### Qualitative Results
+
+![results](FedSegResults.png)
