@@ -1,6 +1,6 @@
 # Federated Segmentation
 
-This repo contains code for Federated Segmentation.
+This repo contains code for the proposed Federated Segmentation with Loss Balancing algorithm to segment 33 classes in whole-brain MRI volumes.
 
 ## Run
 
