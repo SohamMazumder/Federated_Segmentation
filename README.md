@@ -16,3 +16,12 @@ For example:
 python 3.6
 
 pytorch 0.4
+
+## Results
+
+| Method        | Best Performance (Dice |
+| ------------- | ---------------------- |
+| Baseline      | 0.867 |
+| FL with Loss Balancing  | 0.84  |
+| Brain Torrent | 0.863 |
+| CIIL          | 0.829 |
